@@ -24,6 +24,10 @@ CefViewBrowserClient::OnBeforeBrowse(CefRefPtr<CefBrowser> browser,
   CEF_REQUIRE_UI_THREAD();
 
   message_router_->OnBeforeBrowse(browser, frame);
+
+  auto delegate = client_delegate_.lock();
+   if (delegate)
+     return delegate->OnBeforeBrowse(browser, frame, request, user_gesture, is_redirect);
   return false;
 }
 
